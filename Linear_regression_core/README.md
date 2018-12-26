@@ -1,4 +1,3 @@
-# KNN_tfjs-node
+# Linear_regression_core
 
-This app is using KNN (k-nearest neighbors) algortithim with tfjs-node to predict adult person gender based on weight & height.
-
+Example of multivariate linear regression with tfjs core.
