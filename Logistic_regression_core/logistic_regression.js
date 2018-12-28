@@ -95,18 +95,34 @@ class lreg {
 
 
     recordCost() {
-
-        const Cost = this.features
-            .matMul(this.weights)
-            .sub(this.labels)
-            .pow(2)
-            .sum()
-            .div(this.features.shape[0])
-            .get();
-
-        this.costHistory.unshift(Cost);
-    }    
         
+            const guesses = this.features.matMul(this.weights).sigmoid();
+
+            const termOne = this.labels.transpose().matMul(guesses.log());
+    
+            const termTwo = this.labels
+                .mul(-1)
+                .add(1)
+                .transpose()
+                .matMul(
+                    guesses
+                        .mul(-1)
+                        .add(1)
+                        .log()
+                );
+    
+    
+         const Cost = termOne
+                .add(termTwo)
+                .div(this.features.shape[0])
+                .mul(-1)
+                .get(0,0);
+
+            this.costHistory.unshift(Cost);
+            
+        };
+    
+
     updateLearningRate() {
         if (this.costHistory.length <2) {
             return;
