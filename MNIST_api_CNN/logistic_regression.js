@@ -5,7 +5,7 @@ const mnist = require('mnist-data');
 
 
 loadData = () => {
-    const mnistData = mnist.training(0,60000);
+    const mnistData = mnist.training(0,10000);
 
     const features = tf.stack(mnistData.images.values.map(image => tf.tensor(image).div(255).squeeze().expandDims(-1)));
     console.log("features",features.shape)
@@ -61,7 +61,7 @@ model.add(tf.layers.conv2d({
 train = async () => {
       for (let i = 1; i < 10; ++i) {
        const z = await model.fit(xs, ys, {batchSize: 10, epochs: 10});
-       console.log("Loss after Epoch " + i + " : " + z.history.loss[0]);
+       console.log("Loss after Epoch " + i + " : " + z.history.loss[0], "| ","Accuracy: ",z.history.acc[0]);
       }
   }
 
@@ -93,7 +93,7 @@ SinglePredictiction = () => {
 exec = async () => {
     await train();
     const accuracy = await test(xt, yt);
-   console.log("Accuracy:", accuracy)
+   console.log("Accuracy on testset:", accuracy)
     //SinglePredictiction();
   }
 
