@@ -58,10 +58,10 @@ const yt = tf.tensor(testEncodedLabels);
 
 // Build and compile model.
 const model = tf.sequential();
-model.add(tf.layers.dense({units: 10, inputShape: [784], activation: 'softmax'}));
-// model.add(tf.layers.dense({units: 32, activation: 'relu'}));
-// model.add(tf.layers.dense({units: 3, activation: 'softmax'}));
-model.compile({optimizer: 'sgd', loss: 'categoricalCrossentropy'});
+model.add(tf.layers.dense({units: 32, inputShape: [784], activation: 'relu'}));
+model.add(tf.layers.dense({units: 32, activation: 'relu'}));
+model.add(tf.layers.dense({units: 10, activation: 'softmax'}));
+model.compile({optimizer: 'adam', loss: 'categoricalCrossentropy'});
 
 
 // Train model with fit().
